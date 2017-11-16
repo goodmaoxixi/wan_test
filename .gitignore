@@ -1,0 +1,10 @@
+*~
+*.pyc
+
+# Swap files created by Vim etc.
+*.swp
+*.swo
+*.swn
+
+# Ignores temp files
+/tmp
