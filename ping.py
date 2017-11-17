@@ -6,12 +6,13 @@
 # https://stackoverflow.com/questions/25842744/ping-to-a-specific-ip-address-using-python
 
 import os
-import shlex
-import platform
-import subprocess
-import sys
 import re
+import sys
+import shlex
 import shutil
+import platform
+import datetime
+import subprocess
 
 # Setp 2: Create the cmd to SET(Windows)/export(Unix/Linux/Mac OS) 
 osid = platform.system().lower()
@@ -40,6 +41,7 @@ def ping2(addresses, output_file):
 
     """The 2nd implementation, a better one."""
     for count, ip in enumerate(addresses):
+        now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         cmd = "ping "
 	    # Tokenizes the shell command.
         cmd = shlex.split(cmd + ip) # Windows/Linux		
@@ -47,33 +49,23 @@ def ping2(addresses, output_file):
             output = subprocess.check_output(cmd)
         except subprocess.CalledProcessError,e:
             # Prints the failed command with its exit status
-            print("%d. The IP address {0} is NOT reachable.".format(cmd[-1]) % count)
-            output_file.write(ip + " is NOT active.\n")
+            print(now + "%d The IP address {0} is NOT reachable.".format(cmd[-1]) % count)
+            output_file.write(now + " " + ip + " is NOT active.\n")
         else:
-            print("%d. The IP address {0} is reachable.".format(cmd[-1]) % count)
-            output_file.write(ip + " is active.\n")
+            print(now + "%d The IP address {0} is reachable.".format(cmd[-1]) % count)
+            output_file.write(now + " " + ip + " is active.\n")
 
-def pingsite(addresses, filew):
+def pingsite(addresses, filename):
     # Which ping method to use?
     #simple_ping = True
     simple_ping = False
 
     # Outputs the reachable addresses
-    f = open(filew, "w+")
+    f = open(filename, "w+")
+    f.write("\n*** ping tests started ***\n")
     if simple_ping:
         ping1(addresses, f)
     else:
         ping2(addresses, f)
+    f.write("*** ping tests ended ***\n")
     f.close()
-			
-if __name__ == "__main__":
-
-    #addresses = ["10.21.24.227"]
-    result = pingsite(addresses) 
-    # Outputs the reachable addresses
-    #f = open("ping_result.txt", "w")
-    #if simple_ping:
-        #ping1(addresses, f)
-    #else:
-        #ping2(addresses, f)
-    #f.close()
