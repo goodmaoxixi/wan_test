@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # coding:utf-8
-# gdeployer configuration file gdeployer.ini parser
-# Based on Phus Lu's Goagent uploader.py.
-# Coded in Notepad++ (http://notepad-plus-plus.org/)
-# Author:
-#      Guanglin Du <guanglin.du@gmail.com>
+
+# WAN test configuration file test_config.ini parser
+# Authors:
+#   goodmaoxixi@gmail.com
+#   guanglin.du@gmail.com
 
 import os
 import re
