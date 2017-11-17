@@ -11,17 +11,12 @@ import smtplib
 import datetime
 from email.mime.text import MIMEText
 
-
-mailto_list = ["1234@qq.com", "5678@qq.com"] 
-mail_host = "smtp.qq.com"
-mail_user = ""
-mail_pass = ""
-mail_postfix = "qq.com"
 proxy_host = "192.168.1.10"
 proxy_port = "8080"
 
 
-def send_mail(to_list, sub, content): 
+def send(mail_host, mail_user, mail_pass,
+                         mail_postfix, to_list, sub, content): 
     """ Send an email with no proxy. """
     me = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
     msg = MIMEText(content) 
@@ -119,22 +114,10 @@ class ProxySMTP(smtplib.SMTP):
         return new_socket
 
 
-if __name__ == '__main__':
-    nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    news = "hello, world"
-    isProxy = 0
-    ip = socket.gethostbyname(socket.gethostname())
-   
-    if isProxy == 0:
-	    if send_mail(mailto_list, nowStr, news): 
-	        print "Mail sent successfully"
-	    else: 
-	        print "Failed sending the email!!!"
-    else:
-	    # Both port 25 and 587 work for SMTP
-	    conn = ProxySMTP(host="smtp.qq.com", port=587,
-            p_address=proxy_host, p_port=proxy_port)
-
+def send_behind_proxy():
+    """ Both port 25 and 587 work for SMTP """
+    conn = ProxySMTP(host="smtp.qq.com", port=587,
+        p_address=proxy_host, p_port=proxy_port)
     conn.ehlo()
     conn.starttls()
     conn.ehlo()
@@ -144,13 +127,12 @@ if __name__ == '__main__':
 
     sender = "987@qq.com"
     receivers = ["312@qq.com"]
-	message = """From: From Person <from@fromdomain.com>
-	To: To Person <to@todomain.com>
-	Subject: SMTP e-mail test
-	This is a test mail sender.
-	"""
-
-	print('--- Sending an email...')
-	conn.sendmail(sender, receivers, message)
-	print('--- Done!')
-	conn.close()
+    message = """From: From Person <from@fromdomain.com>
+ 	                        To: To Person <to@todomain.com>
+	                        Subject: SMTP e-mail test
+	                        This is a test mail sender.
+	                    """
+    print('--- Sending an email...')
+    conn.sendmail(sender, receivers, message)    
+    conn.close()
+    print('--- Done!')

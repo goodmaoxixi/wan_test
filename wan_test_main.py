@@ -11,6 +11,7 @@ import datetime
 import subprocess
 import ping
 import test_url
+import send_email
 import test_config_parser
 
 # A global variable to hold the test configuration.
@@ -41,8 +42,15 @@ def test_portals():
 
 
 def test_email():
-    """ Only sends an email. Please check the inbox manually."""
-    pass
+    """ Only sends an email. Please check your inbox manually."""
+    mail_to_list = [tcp.mail_to_list] # converts to an array
+    nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    news = "Hello, World!\n--- Automatically sent from the WAN test suite."
+    if send_email.send(tcp.mail_host, tcp.mail_user, tcp.mail_pass,
+                                    tcp.mail_postfix, mail_to_list, nowStr, news): 
+        print(now + " Mail sent successfully")
+    else: 
+	    print(now + " Failed sending the email!!! Please check your settings.")
 
 
 if __name__ == "__main__":
