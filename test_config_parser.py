@@ -35,7 +35,7 @@ class WANTestConfigParser(object):
 
         # appids,  goagent server src dir, Python interpretor & location of GAE appcfg.py
         self.web_urls = self.config.get('signin', 'web_urls')
-        self.usernames = self.config.get('signin', 'usernames')        
+        self.usernames = self.config.get('signin', 'usernames')
         self.passwords = self.config.get('signin', 'passwords')
 
     def show_info(self):

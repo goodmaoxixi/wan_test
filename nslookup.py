@@ -1,70 +1,18 @@
-# Tests whether a wan test IP address is reachable by pinging.
-# Created on Oct. 12, 2017 Thu.
-# Modified on Oct 16, Mon.
 
-# See
-# https://stackoverflow.com/questions/25842744/ping-to-a-specific-ip-address-using-python
+import socket
 
-import os
-import shlex
-import platform
-import subprocess
-import sys
-import re
-import shutil
-
-# Setp 2: Create the cmd to SET(Windows)/export(Unix/Linux/Mac OS) 
-osid = platform.system().lower()
-
-
-def ping1(addresses, output_file):
-    """The 1st simple implementation."""	
-    for count, ip in enumerate(addresses):
-        if os.system("ping -c 1 " + ip ) == 0:# Linux
-		#if os.system("ping " + ip ) == 0:# Windows
-            print("%d. %s is up." % (count, ip))
-            output_file.write(ip + "\n")
-        else:
-            print("%d. %s is down." % (count, ip))	
-
-		
-def ping2(addresses, output_file):
-    cmd = "ping "
-    if osid == "windows":
-	    pass
-    elif osid == "linux" or osid == "darwin":
-        cmd = cmd + "-c1 "
-    else: # exits abnormally
-        print("Unknown OS id: %s. Terminated." % osid)
-        return
-
-    """The 2nd implementation, a better one."""
-    for count, ip in enumerate(addresses):
-	    # Tokenizes the shell command.
-        cmd = shlex.split(cmd + ip) # Windows/Linux		
-        try:
-            output = subprocess.check_output(cmd)
-        except subprocess.CalledProcessError,e:
-            # Prints the failed command with its exit status
-            print("%d. The IP address {0} is NOT reachable.".format(cmd[-1]) % count)
-        else:
-            print("%d. The IP address {0} is reachable.".format(cmd[-1]) % count)
-            output_file.write(ip + " is active.\n")
-
-			
-#if __name__ == "__main__":
-def pingsite():
-    # Which ping method to use?
-    #simple_ping = True
-    simple_ping = False
-
-    # Contains the wan test IP addresses
-    addresses = ["www.cnpc"|"www.baidu.com"]
-	
-    # Outputs the reachable addresses
-    f = open("nslookup_result.txt", "w")
-    if simple_ping:
-        ping1(addresses, f)
-    else:
-        ping2(addresses, f)
-    f.close()
+def resolve_domain_name(domain_name):
+    #print("--- Retrieving a remote machine's IP address ---")
+    result = domain_name
+    try:
+        result = result + " => " + socket.gethostbyname(domain_name)
+    except socket.error, err_msg:
+        result = result + ": " + str(err_msg)
+        
+    print(result)
+    return result
+    
+    
+if __name__ == '__main__':
+    resolve_domain_name("www.baidu.com")
+    resolve_domain_name("www.baidunonexitent.com")

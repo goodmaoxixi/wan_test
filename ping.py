@@ -40,6 +40,7 @@ def ping2(addresses, output_file):
 
     """The 2nd implementation, a better one."""
     for count, ip in enumerate(addresses):
+        cmd = "ping "
 	    # Tokenizes the shell command.
         cmd = shlex.split(cmd + ip) # Windows/Linux		
         try:
@@ -47,24 +48,32 @@ def ping2(addresses, output_file):
         except subprocess.CalledProcessError,e:
             # Prints the failed command with its exit status
             print("%d. The IP address {0} is NOT reachable.".format(cmd[-1]) % count)
+            output_file.write(ip + " is NOT active.\n")
         else:
             print("%d. The IP address {0} is reachable.".format(cmd[-1]) % count)
             output_file.write(ip + " is active.\n")
 
-			
-#if __name__ == "__main__":
-def pingsite():
+def pingsite(addresses, filew):
     # Which ping method to use?
     #simple_ping = True
     simple_ping = False
 
-    # Contains the wan test IP addresses
-    addresses = ["10.21.24.227", "11.11.218.133", "10.30.151.77", "10.32.2.19", "10.32.2.5", "10.33.52.17"]
-	
     # Outputs the reachable addresses
-    f = open("ping_result.txt", "w")
+    f = open(filew, "w+")
     if simple_ping:
         ping1(addresses, f)
     else:
         ping2(addresses, f)
     f.close()
+			
+if __name__ == "__main__":
+
+    #addresses = ["10.21.24.227"]
+    result = pingsite(addresses) 
+    # Outputs the reachable addresses
+    #f = open("ping_result.txt", "w")
+    #if simple_ping:
+        #ping1(addresses, f)
+    #else:
+        #ping2(addresses, f)
+    #f.close()

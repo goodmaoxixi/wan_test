@@ -53,6 +53,7 @@ def is_url_accessible(url):
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     result = now + " " + url + result
     print("%s" % result)    
+
     return result
 
 

@@ -19,8 +19,9 @@ tcp = test_config_parser.WANTestConfigParser()
 
 def ping_addresses():
     addresses = tcp.ip_addresses.split("|")
-    for address in addresses:
-        pass
+    #for address in addresses:
+    result = ping.pingsite(addresses, out)
+        #pass
 
 
 def test_DNS():
@@ -33,6 +34,9 @@ def test_portals():
     portals = tcp.portals.split("|")
     for portal in portals:
         result = test_url.is_url_accessible(portal)
+        f = open(out, "a+")
+        f.write(result + "\n")
+        f.close()
         # Outputs to a file.
 
 
@@ -46,6 +50,10 @@ if __name__ == "__main__":
     print("A string format time %s" % now)
 	
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    nowtime = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+    out = "./tmp/result-" + str(nowtime) + ".txt"
+    print out
+    #file_object = open(out, "w+")
     print("\n*** WAN test started at " + now + " ***")
     ping_addresses()
     test_DNS()
