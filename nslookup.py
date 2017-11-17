@@ -59,10 +59,10 @@ def pingsite():
     simple_ping = False
 
     # Contains the wan test IP addresses
-    addresses = ["10.21.24.227", "11.11.218.133", "10.30.151.77", "10.32.2.19", "10.32.2.5", "10.33.52.17"]
+    addresses = ["www.cnpc"|"www.baidu.com"]
 	
     # Outputs the reachable addresses
-    f = open("ping_result.txt", "w")
+    f = open("nslookup_result.txt", "w")
     if simple_ping:
         ping1(addresses, f)
     else:

@@ -8,7 +8,6 @@
 import os
 import shlex
 import subprocess
-
 import ping
 
 
@@ -17,7 +16,8 @@ import ping
 		
 if __name__ == "__main__":	
     # Contains the wan test IP addresses
-    addresses = contents.splitlines()
+    #addresses = contents.splitlines()
     # Removes the empty lines
-    addresses = ' '.join(addresses).split()
-    print addresses
+    #addresses = ' '.join(addresses).split()
+    #print addresses
+    ping.pingsite()
