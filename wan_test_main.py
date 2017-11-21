@@ -39,7 +39,7 @@ def test_DNS(filename):
     for name in domain_names:
         result = nslookup.resolve_domain_name(name)
         f.write(nowStr + " " + result + "\n")
-    f.write("*** nslookup tests started ***\n")
+    f.write("*** nslookup tests ended ***\n")
     f.close()
     print("*** nslookup tests ended ***\n")
 
@@ -53,7 +53,7 @@ def test_portals(filename):
         result = test_url.is_url_accessible(portal)
         f = open(filename, "a+")
         f.write(result + "\n")
-    f.write("*** portal tests started ***\n")
+    f.write("*** portal tests ended ***\n")
     f.close()
     print("*** portal tests ended ***\n")
 
@@ -83,7 +83,7 @@ def test_email(filename):
         print(msg)
         f.write(msg)
         
-    f.write("*** email tests started ***\n")
+    f.write("*** email tests ended ***\n")
     f.write("\n!!!Signin tests not supported yet. Please do that manually.\n")
     f.close()
     print("*** email tests ended ***\n")
