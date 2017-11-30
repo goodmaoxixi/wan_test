@@ -99,7 +99,7 @@ if __name__ == "__main__":
     #print("A string format time %s" % now)	
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     now2 = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
-    filename = "./tmp/result-" + str(now2) + ".txt"
+    filename = "../tmp/result-" + str(now2) + ".txt"
 
     print("\n=== WAN test started at " + now + " ===")
     println(u'''~~~ 广域网应急演练自动测试脚本 ~~~'''.strip())        
@@ -107,6 +107,7 @@ if __name__ == "__main__":
     test_DNS(filename)
     test_portals(filename)
     test_email(filename)
+    
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print("\n!!!Signin tests not supported yet. Please do that manually.")
     println(u'''网站登录测试尚不支持，请手动执行！'''.strip())    
