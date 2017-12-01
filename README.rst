@@ -5,14 +5,15 @@ A WAN test suite which simplifies the boring WAN test work with automatic schedu
 
 Features Implemented
 -----------------------------
-#. ping
-#. nslookup
-#. portal retrieval
-# mail sending with or without a proxy
+1. ping
+2. nslookup
+3. portal retrieval
+4. mail sending with or without a proxy
 
 Features to Be Implemented
 -----------------------------
-Formatted output, e.g., CSV format, Excel format, schedule tasks, and more.
+1. Formatted output, e.g., CSV format, Excel format
+2. schedule tasks, and more
 
 Configuration File
 -----------------------------
