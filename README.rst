@@ -1,11 +1,14 @@
 WAN Test Suite
 ====================
 
-A WAN test suite which simplifies the boring WAN test work easy and automatic.
+A WAN test suite which simplifies the boring WAN test work with automatic schedule tasks.
 
 Features Implemented
 -----------------------------
-ping, nslookup, portal retrieval, mail sending without proxy support at present.
+#. ping
+#. nslookup
+#. portal retrieval
+# mail sending with or without a proxy
 
 Features to Be Implemented
 -----------------------------
@@ -21,6 +24,5 @@ All the outputs are time-stamped textual files in folder tmp. The time format is
 
 Run
 -----------------------------
-From your terminal (Windows CMD/Linux shell):
-cd wan_test/wan_test
-python wan_test_main.py
+#. cd wan_test/wan_test
+#. python wan_test_main.py
