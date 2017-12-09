@@ -14,7 +14,7 @@ import platform
 import datetime
 import subprocess
 
-# Setp 2: Create the cmd to SET(Windows)/export(Unix/Linux/Mac OS) 
+# Setp 2: Create the cmd to SET(Windows)/export(Unix/Linux/Mac OS)
 osid = platform.system().lower()
 
 
