@@ -14,7 +14,6 @@ import platform
 import datetime
 import subprocess
 
-# Setp 2: Create the cmd to SET(Windows)/export(Unix/Linux/Mac OS) 
 osid = platform.system().lower()
 
 
@@ -22,14 +21,15 @@ def ping1(addresses, output_file):
     """The 1st simple implementation."""	
     for count, ip in enumerate(addresses):
         if os.system("ping -c 1 " + ip ) == 0:# Linux
-		#if os.system("ping " + ip ) == 0:# Windows
             print("%d. %s is up." % (count, ip))
             output_file.write(ip + "\n")
+	#elsif os.system("ping " + ip ) == 0:# Windows
         else:
             print("%d. %s is down." % (count, ip))	
 
 		
 def ping2(addresses, output_file):
+    """Creates the cmd to SET(Windows)/export(Unix/Linux/Mac OS)"""
     cmd = "ping "
     if osid == "windows":
 	    pass
@@ -49,11 +49,14 @@ def ping2(addresses, output_file):
             output = subprocess.check_output(cmd)
         except subprocess.CalledProcessError,e:
             # Prints the failed command with its exit status
-            print(now + "%d The IP address {0} is NOT reachable.".format(cmd[-1]) % count)
+            print(now + "%d The IP address {0} is NOT reachable."
+                  .format(cmd[-1]) % count)
             output_file.write(now + " " + ip + " is NOT active.\n")
         else:
-            print(now + "%d The IP address {0} is reachable.".format(cmd[-1]) % count)
+            print(now + "%d The IP address {0} is reachable."
+                  .format(cmd[-1]) % count)
             output_file.write(now + " " + ip + " is active.\n")
+
 
 def pingsite(addresses, filename):
     # Which ping method to use?
