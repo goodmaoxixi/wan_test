@@ -20,5 +20,6 @@ setup(
     author_email='guanglin.du@gmail.com; goodmaoxixi@gmail.com',
     url='https://github.com/goodmaoxixi/wan_test',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs')),
+    test_suite="tests"
 )

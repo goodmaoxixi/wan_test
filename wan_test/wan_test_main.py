@@ -26,7 +26,8 @@ tcp = test_config_parser.WANTestConfigParser()
 def ping_addresses(filename):
     addresses = tcp.ip_addresses.split("|")
     print("\n*** ping tests started ***")
-    result = ping.pingsite(addresses, filename)
+    for count, ip in enumerate(addresses):
+        result = ping.pingsite(ip, filename)
     print("*** ping tests ended ***\n")
 
 
