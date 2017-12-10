@@ -19,7 +19,6 @@ class WANTestConfigParser(object):
         """Read all the configuration info from file test_config.ini."""
         self.config = ConfigParser.RawConfigParser()
         self.config.read('wan_test.ini')
-        #self.config.read('../tmp/wan_test.ini')
 
         self.ip_addresses = self.config.get('ping', 'ip_addresses')    
         self.domain_names = self.config.get('nslookup', 'domain_names')

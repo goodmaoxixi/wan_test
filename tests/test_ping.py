@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .context import wan_test
+import wan_test.ping
 
 import unittest
 

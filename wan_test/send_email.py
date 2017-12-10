@@ -16,7 +16,7 @@ proxy_port = "8080"
 
 
 def send(mail_host, mail_user, mail_pass,
-                         mail_postfix, to_list, sub, content): 
+         mail_postfix, to_list, sub, content): 
     """ Send an email with no proxy. """
     me = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
     msg = MIMEText(content) 

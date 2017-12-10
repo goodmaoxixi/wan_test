@@ -21,13 +21,38 @@ import test_config_parser
 
 # A global variable to hold the test configuration.
 tcp = test_config_parser.WANTestConfigParser()
-
+# The ping command is OS-dependent
+osid = platform.system().lower()
 
 def ping_addresses(filename):
+    # Outputs the reachable addresses
+    f = open(filename, "w+")
+    f.write("\n*** ping tests started ***\n")
+
+    # Creates the cmd for Windows/Linux/Mac OS    
+    cmd = "ping "
+    if osid == "windows":
+        pass
+    elif osid == "linux" or osid == "darwin":
+        cmd = cmd + "-c1 "
+    else: # exits if the OS is not supported yet
+        result = "Unknown OS: " + osid + " I don't know how to ping."
+        f.write(result)        
+        print(result)
+        f.write("*** ping tests ended with errors ***\n")
+        f.close()
+        print("*** ping tests ended with errors ***\n")
+        return
+    
     addresses = tcp.ip_addresses.split("|")
     print("\n*** ping tests started ***")
     for count, ip in enumerate(addresses):
-        result = ping.pingsite(ip, filename)
+        cmd = cmd + " " + ip
+        result = ping.ping2(count, ip, cmd)
+        f.write(result)
+
+    f.write("*** ping tests ended ***\n")
+    f.close()
     print("*** ping tests ended ***\n")
 
 
