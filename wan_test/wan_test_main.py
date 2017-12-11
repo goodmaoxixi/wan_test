@@ -20,6 +20,7 @@ import nslookup
 import send_email
 import test_config_parser
 
+
 # A global variable to hold the test configuration.
 tcp = test_config_parser.WANTestConfigParser()
 # The ping command is OS-dependent
@@ -49,7 +50,7 @@ def ping_addresses(filename):
     print("\n*** ping tests started ***")
     for count, ip in enumerate(addresses):
         cmd = cmd + " " + ip
-        result = ping.ping2(count, ip, cmd)
+        result = ping.ping2(count, cmd)
         f.write(result)
 
     f.write("*** ping tests ended ***\n")

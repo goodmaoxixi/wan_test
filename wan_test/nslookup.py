@@ -18,7 +18,7 @@ def resolve_domain_name(domain_name):
         
     print(nowStr + result)
     return result
-    
+
     
 if __name__ == '__main__':
     resolve_domain_name("www.baidu.com")

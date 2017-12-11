@@ -1,40 +1,60 @@
 # -*- coding: utf-8 -*-
+# Python unittest Fixtures:
+# https://dmorgan.info/posts/python-unittest-fixtures/
+
+import platform
+import unittest
 
 from .context import wan_test
 import wan_test.ping
 
-import platform
-import unittest
-import logging
-
 
 class PingTestSuite(unittest.TestCase):
     """Basic ping test cases."""
-    def setUP(self):
+
+    @classmethod
+    def setUpClass(cls):
+        """Class fixtures"""
+        cls.ip = "10.0.0.1"
+        #cls.ip = "192.168.1.1"
+        cls.osid = platform.system().lower()
+
+        # The ping command is OS-dependent
+        # Creates the cmd for Windows/Linux/Mac OS    
+        cls.cmd = "ping" + " "
+        cls.result = ""
+        if cls.osid == "windows":
+            pass
+        elif cls.osid == "linux" or cls.osid == "darwin":
+            cls.cmd = cls.cmd + "-c1" + " "
+        else: # The current OS is unsupported yet
+            cls.result = "Unsupported OS: " + cls.osid
+
+
+    @classmethod
+    def tearDownClass(cls):
         pass
 
-    def test_should_reply_OK(self):
-        # The ping command is OS-dependent
-        ip = "192.168.1.1"
-        osid = platform.system().lower()
 
-        # Creates the cmd for Windows/Linux/Mac OS    
-        cmd = "ping" + " "
-        result = ""
-        if osid == "windows":
-            pass
-        elif osid == "linux" or osid == "darwin":
-            cmd = cmd + "-c1" + " "
-        else: # The current OS is unsupported yet
-            result = "Unsupported OS: " + osid
+    def test_ping1(self):
+        # Tests whether your OS is supported
+        self.assertFalse("Unsupported OS" in self.result,
+                         "Error: your OS is not supported yet: " + self.osid)
+        cmd = self.cmd + self.ip
+        result = wan_test.ping.ping1(1, cmd)
+        self.assertTrue("up" in result,    "Should be up")
+        self.assertFalse("down" in result, "Should be down")
 
-        self.assertFalse("Unsupported OS" in result,
-                         "Error: your OS is not supported yet: " + osid)
 
-        result = wan_test.ping.ping2(1, ip, cmd)
-        self.assertTrue("reachable" in result, "Should be found")
-        self.assertFalse("NOT reachable" "reachable" in result,
-                        "Should not be found")
+    def test_ping2(self):        
+        # Tests whether your OS is supported
+        self.assertFalse("Unsupported OS" in self.result,
+                         "Error: your OS is not supported yet: " + self.osid)
+
+        cmd = self.cmd + self.ip
+        result = wan_test.ping.ping2(1, cmd)
+        self.assertTrue("reachable" in result,      "Should be found")
+        self.assertFalse("NOT reachable" in result, "Should not be found")
 
 
 if __name__ == '__main__':

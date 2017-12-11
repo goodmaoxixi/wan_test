@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*-
-
-from .context import wan_test
-
 import unittest
 
+from .context import wan_test
+import wan_test.nslookup
 
 class NSLookupTestSuite(unittest.TestCase):
-    """Advanced test cases."""
+    """Nslookup test cases."""
 
-    def test_nslookup_OK(self):
-        self.assertIsNone(None)
+    @classmethod
+    def setUpClass(cls):
+        """Class fixtures"""
+        cls.bing_dot_com = "www.bing.com"
+        cls.ip = "202.106.46.151" # IP address of bing.com
+
+
+    def test_nslookup(self):
+        s1 = wan_test.nslookup.resolve_domain_name(self.bing_dot_com)
+        list_in_ipv4 = s1.split(".")
+        self.assertTrue(self.ip in s1, "Should be found")
 
 
 if __name__ == '__main__':
