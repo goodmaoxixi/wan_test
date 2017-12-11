@@ -10,7 +10,6 @@ import re
 import sys
 import shlex
 import shutil
-import platform
 import datetime
 import subprocess
 
@@ -32,16 +31,16 @@ def ping2(count, ip, cmd):
     # Tokenizes the shell command.
     cmd = shlex.split(cmd + ip) # Windows/Linux		
     
-    s1 = ""
+    s1 = "reachable."
     try:
         output = subprocess.check_output(cmd)
     except subprocess.CalledProcessError,e:
         s1 = "NOT reachable."
     else:
-        s1 = "reachable."
+        pass
 
     result = (result + " "
-              + count + " "
+              + str(count) + " "
               + "The IP address {0} is".format(cmd[-1]) + " "
               + s1)
     return result

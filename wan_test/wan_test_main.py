@@ -11,6 +11,7 @@ import os
 import sys
 import shlex
 import datetime
+import platform
 import subprocess
 
 import ping
@@ -42,7 +43,7 @@ def ping_addresses(filename):
         f.write("*** ping tests ended with errors ***\n")
         f.close()
         print("*** ping tests ended with errors ***\n")
-        return
+        return result
     
     addresses = tcp.ip_addresses.split("|")
     print("\n*** ping tests started ***")
