@@ -10,7 +10,7 @@ import os
 this_dir = os.path.dirname(__file__)
 root_dir = os.path.abspath(os.path.join(this_dir, '..'))
 
-# The path insert guard as the C/C++ include guard.
+# The path insertion guard as the C/C++ include guard.
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 

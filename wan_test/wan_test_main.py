@@ -18,13 +18,14 @@ import ping
 import test_url
 import nslookup
 import send_email
-import test_config_parser
+import config_loader
 
 
 # A global variable to hold the test configuration.
-tcp = test_config_parser.WANTestConfigParser()
+wtcp = config_loader.WANTestConfigParser()
 # The ping command is OS-dependent
 osid = platform.system().lower()
+
 
 def ping_addresses(filename):
     # Outputs the reachable addresses
@@ -46,7 +47,7 @@ def ping_addresses(filename):
         print("*** ping tests ended with errors ***\n")
         return result
     
-    addresses = tcp.ip_addresses.split("|")
+    addresses = wtcp.ip_addresses.split("|")
     print("\n*** ping tests started ***")
     for count, ip in enumerate(addresses):
         cmd = cmd + " " + ip
@@ -59,7 +60,7 @@ def ping_addresses(filename):
 
 
 def test_DNS(filename):
-    domain_names = tcp.domain_names.split("|")
+    domain_names = wtcp.domain_names.split("|")
     print("*** nslookup tests started ***")
     f = open(filename, "a+")    
     f.write("\n\n*** nslookup tests started ***\n")
@@ -73,7 +74,7 @@ def test_DNS(filename):
 
 
 def test_portals(filename):
-    portals = tcp.portals.split("|")
+    portals = wtcp.portals.split("|")
     print("*** portal tests started ***")
     f = open(filename, "a+")    
     f.write("\n\n*** portal tests started ***\n")
@@ -88,7 +89,7 @@ def test_portals(filename):
 
 def test_email(filename):
     """ Only sends an email. Please check your inbox manually."""
-    mail_to_list = [tcp.mail_to_list] # converts to an array
+    mail_to_list = [wtcp.mail_to_list] # converts to an array
     nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     news = "Hello, World!\n--- Automatically sent from the WAN test suite."
     
@@ -96,13 +97,12 @@ def test_email(filename):
     f = open(filename, "a+")    
     f.write("\n\n*** email tests started ***\n")
     msg = (nowStr + "\n"
-          + tcp.mail_user + "@" + tcp.mail_host
+          + wtcp.mail_user + "@" + wtcp.mail_host
           + " sent "
-          + tcp.mail_to_list)
+          + wtcp.mail_to_list)
 
-    if send_email.send(tcp.mail_host, tcp.mail_user, tcp.mail_pass,
-                       tcp.mail_postfix, mail_to_list, nowStr, news): 
-
+    if send_email.send(wtcp.mail_host, wtcp.mail_user, wtcp.mail_pass,
+                       wtcp.mail_postfix, mail_to_list, nowStr, news):
         msg = msg + " an email successfully.\n"
         print(msg)
         f.write(msg)
@@ -113,7 +113,7 @@ def test_email(filename):
         
     f.write("*** email tests ended ***\n")
     f.write("\n!!!Signin tests not supported yet. Please do that manually.\n")
-    f.close()
+    f.wtcpose()
     print("*** email tests ended ***\n")
 
     

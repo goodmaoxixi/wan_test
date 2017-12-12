@@ -14,11 +14,10 @@ class PingTestSuite(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Class fixtures"""
-        cls.ip = "10.0.0.1"
-        #cls.ip = "192.168.1.1"
+        """Class-scope test fixtures"""
+        #cls.ip = "10.0.0.1"
+        cls.ip = "192.168.1.1"
         cls.osid = platform.system().lower()
-
         # The ping command is OS-dependent
         # Creates the cmd for Windows/Linux/Mac OS    
         cls.cmd = "ping" + " "
@@ -30,11 +29,9 @@ class PingTestSuite(unittest.TestCase):
         else: # The current OS is unsupported yet
             cls.result = "Unsupported OS: " + cls.osid
 
-
     @classmethod
     def tearDownClass(cls):
         pass
-
 
     def test_ping1(self):
         # Tests whether your OS is supported
@@ -44,7 +41,6 @@ class PingTestSuite(unittest.TestCase):
         result = wan_test.ping.ping1(1, cmd)
         self.assertTrue("up" in result,    "Should be up")
         self.assertFalse("down" in result, "Should be down")
-
 
     def test_ping2(self):        
         # Tests whether your OS is supported

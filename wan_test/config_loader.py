@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding:utf-8
+# -*- coding: UTF-8 -*-
 
 # WAN test configuration file test_config.ini parser
 # Authors:
@@ -13,8 +13,10 @@ import ConfigParser
 # Versions based on date
 __version__ = '20171115a'
 
+
 # Class to read the configuration info.
 class WANTestConfigParser(object):
+
     def __init__(self):
         """Read all the configuration info from file test_config.ini."""
         self.config = ConfigParser.RawConfigParser()

@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+# Python unittest Fixtures:
+# https://dmorgan.info/posts/python-unittest-fixtures/
+
+import platform
+import unittest
+
+from .context import wan_test
+import wan_test.send_mail
+
+
+class SendMailTestSuite(unittest.TestCase):
+    """Mail sending test cases."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Class-scope test fixtures"""
+        cls.mail_host = "smtp.example.com"
+        cls.mail_user = "foo"
+        cls.mail_pass = "password"
+        cls.mail_postfix = "example.com"
+        cls.mail_to_list = "example@example.com"
+        cls.proxy_hosst = "192.168.1.1"
+        cls.proxy_port = 8080
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def test_send_mail(self):
+        nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        news = "Hello, World!\n---Automatically sent from the WAN test suite."    
+        msg = (nowStr + "\n"
+               + self.mail_user + "@" + self.mail_host
+               + " sent "
+               + self.mail_to_list)
+        result = send_email.send(
+            self.mail_host,
+            self.mail_user,
+            self.mail_pass,
+            self.mail_postfix,
+            self.mail_to_list,
+            nowStr,
+            news):
+        self.assertTrue(result, "Should be down")
+
+    def test_send_mail_behind_proxy(self):        
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()

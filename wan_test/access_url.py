@@ -10,11 +10,13 @@ import httplib
 import urllib2
 import datetime
 
+
 # http://stackoverflow.com/questions/1949318/checking-if-a-website-is-up-via-python
 def is_website_online(host):
-    """ This function checks to see if a host name has a DNS entry by checking
-        for socket info. If the website gets something in return, 
-        we know it's available to DNS.
+    """
+    This function checks to see if a host name has a DNS entry by checking
+    for socket info. If the website gets something in return, 
+    we know it's available to DNS.
     """
     try:
         socket.gethostbyname(host)
@@ -25,10 +27,11 @@ def is_website_online(host):
 
 
 def is_page_available(host, path="/"):
-    """ This function retreives the status code of a website by requesting
-        HEAD data from the host. This means that it only requests the headers.
-        If the host cannot be reached or something else goes wrong, it returns
-        False.
+    """
+    This function retreives the status code of a website by requesting
+    HEAD data from the host. This means that it only requests the headers.
+    If the host cannot be reached or something else goes wrong, it returns
+    False.
     """
     try:
         conn = httplib.HTTPConnection(host)
@@ -42,7 +45,7 @@ def is_page_available(host, path="/"):
 
 # https://gist.github.com/fedir/5883651
 def is_url_accessible(url):
-    """ Tests whether a URL is accessable. This is concise and effective. """
+    """Tests whether a URL is accessable. This is concise and effective."""
     ret = urllib2.urlopen(url)
     result = ""
     if ret.code == 200:
@@ -52,8 +55,7 @@ def is_url_accessible(url):
     
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     result = now + " " + url + result
-    print("%s" % result)    
-
+    print("%s" % result)
     return result
 
 
