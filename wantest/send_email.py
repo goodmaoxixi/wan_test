@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-
 # Email-sending module based on my colleague Xuleo's work.
 # Authors:
 #   xuleo@gmail.com
@@ -10,9 +9,6 @@ import socket
 import smtplib
 import datetime
 from email.mime.text import MIMEText
-
-proxy_host = "192.168.1.10"
-proxy_port = "8080"
 
 
 def send(mail_host, mail_user, mail_pass,
@@ -52,8 +48,9 @@ def recvline(sock):
 
 class ProxySMTP(smtplib.SMTP):
     """Connects to a SMTP server through a HTTP proxy."""
-    def __init__(self, host='', port=0, p_address='',p_port=0, local_hostname=None,
-             timeout=socket._GLOBAL_DEFAULT_TIMEOUT):
+
+    def __init__(self, host='', port=0, p_address='',p_port=0,
+                 local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT):
         """Initialize a new instance.
         If specified, `host' is the name of the remote host to which to
         connect.  If specified, `port' specifies the port to which to connect.
@@ -64,7 +61,6 @@ class ProxySMTP(smtplib.SMTP):
         """
         self.p_address = p_address
         self.p_port = p_port
-
         self.timeout = timeout
         self.esmtp_features = {}
         self.default_port = smtplib.SMTP_PORT
@@ -87,7 +83,6 @@ class ProxySMTP(smtplib.SMTP):
             else:
                 # We can't find an fqdn hostname, so use a domain literal
                 addr = '127.0.0.1'
-
                 try:
                     addr = socket.gethostbyname(socket.gethostname())
                 except socket.gaierror:
@@ -115,7 +110,9 @@ class ProxySMTP(smtplib.SMTP):
 
 
 def send_behind_proxy():
-    """ Both port 25 and 587 work for SMTP """
+    """Both port 25 and 587 work for SMTP"""
+    proxy_host = "192.168.1.10"
+    proxy_port = "8080"
     conn = ProxySMTP(host="smtp.qq.com", port=587,
         p_address=proxy_host, p_port=proxy_port)
     conn.ehlo()
@@ -130,8 +127,7 @@ def send_behind_proxy():
     message = """From: From Person <from@fromdomain.com>
  	                        To: To Person <to@todomain.com>
 	                        Subject: SMTP e-mail test
-	                        This is a test mail sender.
-	                    """
+	                        This is a test mail sender."""
     print('--- Sending an email...')
     conn.sendmail(sender, receivers, message)    
     conn.close()

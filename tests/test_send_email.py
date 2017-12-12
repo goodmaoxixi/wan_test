@@ -4,9 +4,10 @@
 
 import platform
 import unittest
+import datetime
 
-from .context import wan_test
-import wan_test.send_mail
+from .context import wantest
+import wantest.send_email
 
 
 class SendMailTestSuite(unittest.TestCase):
@@ -34,15 +35,16 @@ class SendMailTestSuite(unittest.TestCase):
                + self.mail_user + "@" + self.mail_host
                + " sent "
                + self.mail_to_list)
-        result = send_email.send(
+        result = wantest.send_email.send(
             self.mail_host,
             self.mail_user,
             self.mail_pass,
             self.mail_postfix,
             self.mail_to_list,
             nowStr,
-            news):
-        self.assertTrue(result, "Should be down")
+            news)
+        self.assertFalse(result, "Should be false as the address is invalid")
+        self.assertTrue(result, "Should be true")
 
     def test_send_mail_behind_proxy(self):        
         pass

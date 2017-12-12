@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from .context import wan_test
-import wan_test.nslookup
+from .context import wantest
+import wantest.nslookup
 
 
 class NSLookupTestSuite(unittest.TestCase):
@@ -16,7 +16,7 @@ class NSLookupTestSuite(unittest.TestCase):
         cls.ip = "204.79.197.200"
 
     def test_nslookup(self):
-        s1 = wan_test.nslookup.resolve_domain_name(self.bing_dot_com)
+        s1 = wantest.nslookup.resolve_domain_name(self.bing_dot_com)
         self.assertTrue(self.ip in s1, "Should be found")
 
 

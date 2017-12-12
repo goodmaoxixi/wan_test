@@ -5,8 +5,8 @@
 import platform
 import unittest
 
-from .context import wan_test
-import wan_test.ping
+from .context import wantest
+import wantest.ping
 
 
 class PingTestSuite(unittest.TestCase):
@@ -16,7 +16,7 @@ class PingTestSuite(unittest.TestCase):
     def setUpClass(cls):
         """Class-scope test fixtures"""
         #cls.ip = "10.0.0.1"
-        cls.ip = "192.168.1.1"
+        cls.ip = "10.122.4.10"
         cls.osid = platform.system().lower()
         # The ping command is OS-dependent
         # Creates the cmd for Windows/Linux/Mac OS    
@@ -38,7 +38,7 @@ class PingTestSuite(unittest.TestCase):
         self.assertFalse("Unsupported OS" in self.result,
                          "Error: your OS is not supported yet: " + self.osid)
         cmd = self.cmd + self.ip
-        result = wan_test.ping.ping1(1, cmd)
+        result = wantest.ping.ping1(1, cmd)
         self.assertTrue("up" in result,    "Should be up")
         self.assertFalse("down" in result, "Should be down")
 
@@ -48,7 +48,7 @@ class PingTestSuite(unittest.TestCase):
                          "Error: your OS is not supported yet: " + self.osid)
 
         cmd = self.cmd + self.ip
-        result = wan_test.ping.ping2(1, cmd)
+        result = wantest.ping.ping2(1, cmd)
         self.assertTrue("reachable" in result,      "Should be found")
         self.assertFalse("NOT reachable" in result, "Should not be found")
 
