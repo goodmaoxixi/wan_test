@@ -93,8 +93,8 @@ def println(s, file=sys.stderr):
 	assert type(s) is type(u'')
 	file.write(s.encode(sys.getfilesystemencoding(), 'replace') + os.linesep)
 
-def exist():
-    path ='.\\tmp'
+def tmp_folder_check():
+    path ='./tmp'
     new_path = ''.join(x.decode('utf-8') for x in path.split())
     if os.path.exists(new_path):
         print ".\\tmp does exist"
@@ -105,7 +105,7 @@ def exist():
 if __name__ == "__main__":
     #now = datetime.datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     #print("A string format time %s" % now)	
-    exist()
+    tmp_folder_check()
     
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     now2 = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
