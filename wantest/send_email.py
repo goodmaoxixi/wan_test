@@ -98,8 +98,8 @@ class ProxySMTP(smtplib.SMTP):
         # and just alter the socket connection bit.
         print('Will connect to:', (host, port))
         print('Connect to proxy.')
-        new_socket = socket.create_connection((self.p_address,self.p_port), timeout)
-
+        new_socket = socket.create_connection((self.p_address,self.p_port),
+                                              timeout)
         s = "CONNECT %s:%s HTTP/1.1\r\n\r\n" % (port,host)
         s = s.encode('UTF-8')
         new_socket.sendall(s)
@@ -111,9 +111,10 @@ class ProxySMTP(smtplib.SMTP):
         return new_socket
 
 
-def send_behind_proxy(host, port, mail_user, mail_pass, receivers):
+def send_behind_proxy(host, port, p_address, p_port, mail_user, mail_pass,
+                      receivers):
     # Both port 25 and 587 work for SMTP
-    conn = ProxySMTP(host, port, self.p_address, self.p_port)
+    conn = ProxySMTP(host, port, p_address, p_port)
     conn.ehlo()
     conn.starttls()
     conn.ehlo()
@@ -126,8 +127,22 @@ def send_behind_proxy(host, port, mail_user, mail_pass, receivers):
              This is a test mail sender."""
     r, d = conn.login(sender, port)
     print('Login reply: {0}'.format(r))
+    
     print('--- Sending an email...')
-    result = conn.sendmail(sender, receivers, msg)    
+    result = "Mail sent successfully"
+    try:
+        conn.sendmail(sender, receivers, msg)
+    except SMTPRecipientsRefused, e:
+        result = "All recipients were refused"
+    except SMTPHeloError, e:
+        result = "The server didn’t reply properly to the HELO greeting"
+    except SMTPSenderRefused, e:
+        result = "The server didn’t accept the from_addr"
+    except SMTPDataError, e:
+        result = ("The server replied with an unexpected error code "
+                 + "(other than a refusal of a recipient).")
+    else:
+        pass
     conn.close()
     print('--- Done!')
     return result

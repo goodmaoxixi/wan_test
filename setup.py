@@ -13,7 +13,7 @@ with open('LICENSE') as f:
 
 setup(
     name='wantest',
-    version='0.0.1',
+    version='0.1.0',
     description='A WAN test suite',
     long_description=readme,
     author='Guanglin Du; Jia Li',

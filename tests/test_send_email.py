@@ -16,13 +16,14 @@ class SendMailTestSuite(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Class-scope test fixtures"""
-        cls.mail_host = "smtp.example.com"
-        cls.mail_user = "foo"
-        cls.mail_pass = "password"
+        cls.mail_host    = "smtp.example.com"
+        cls.mail_port    = 25 # 587
+        cls.mail_user    = "foo"
+        cls.mail_pass    = "password"
         cls.mail_postfix = "example.com"
         cls.mail_to_list = "example@example.com"
-        cls.proxy_hosst = "192.168.1.1"
-        cls.proxy_port = 8080
+        cls.proxy_host  = "192.168.1.1"
+        cls.proxy_port   = 8080
 
     @classmethod
     def tearDownClass(cls):
@@ -47,8 +48,17 @@ class SendMailTestSuite(unittest.TestCase):
         #self.assertTrue(result, "Should be true")
 
     def test_send_mail_behind_proxy(self):        
-        pass
-
+        result = wantest.send_email.send_behind_proxy(
+            self.mail_host,
+            self.mail_port,
+            self.proxy_host,
+            self.proxy_port,
+            self.mail_user,
+            self.mail_pass,
+            self.mail_to_list)
+        self.assertTrue("Mail sent successfully" in result,
+                        "Successful sending expected")
+        
 
 if __name__ == '__main__':
     unittest.main()

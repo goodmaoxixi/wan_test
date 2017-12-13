@@ -15,7 +15,7 @@ import platform
 import subprocess
 
 import ping
-import test_url
+import access_url
 import nslookup
 import send_email
 import config_loader

@@ -37,8 +37,8 @@ def ping2(count, cmd):
     
     s1 = "reachable."
     try:
-        output = subprocess.check_output(cmd)
-    except subprocess.CalledProcessError,e:
+        subprocess.check_output(cmd)
+    except subprocess.CalledProcessError, e:
         s1 = "NOT reachable."
     else:
         pass
