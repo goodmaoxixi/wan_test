@@ -47,11 +47,13 @@ def recvline(sock):
 
 
 class ProxySMTP(smtplib.SMTP):
-    """Connects to a SMTP server through a HTTP proxy."""
+    """Connects to a SMTP server through an HTTP proxy."""
 
     def __init__(self, host='', port=0, p_address='',p_port=0,
                  local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT):
-        """Initialize a new instance.
+        """
+        Initialize a ProxySMTP instance.
+
         If specified, `host' is the name of the remote host to which to
         connect.  If specified, `port' specifies the port to which to connect.
         By default, smtplib.SMTP_PORT is used.  An SMTPConnectError is raised
@@ -109,26 +111,23 @@ class ProxySMTP(smtplib.SMTP):
         return new_socket
 
 
-def send_behind_proxy():
-    """Both port 25 and 587 work for SMTP"""
-    proxy_host = "192.168.1.10"
-    proxy_port = "8080"
-    conn = ProxySMTP(host="smtp.qq.com", port=587,
-        p_address=proxy_host, p_port=proxy_port)
+def send_behind_proxy(host, port, mail_user, mail_pass, receivers):
+    # Both port 25 and 587 work for SMTP
+    conn = ProxySMTP(host, port, self.p_address, self.p_port)
     conn.ehlo()
     conn.starttls()
     conn.ehlo()
 
-    r, d = conn.login("987@qq.com", "")
-    print('Login reply: %s' % r)
-
-    sender = "987@qq.com"
-    receivers = ["312@qq.com"]
-    message = """From: From Person <from@fromdomain.com>
- 	                        To: To Person <to@todomain.com>
-	                        Subject: SMTP e-mail test
-	                        This is a test mail sender."""
+    sender = mail_user + "@" + mail_postfix
+    #receivers = ["312@qq.com"] # list
+    msg = """From: From Person <from@fromdomain.com>
+             To: To Person <to@todomain.com>
+             Subject: SMTP e-mail test
+             This is a test mail sender."""
+    r, d = conn.login(sender, port)
+    print('Login reply: {0}'.format(r))
     print('--- Sending an email...')
-    conn.sendmail(sender, receivers, message)    
+    result = conn.sendmail(sender, receivers, msg)    
     conn.close()
     print('--- Done!')
+    return result

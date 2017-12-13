@@ -10,7 +10,7 @@ class NSLookupTestSuite(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Class fixtures"""
+        """Class-scope test fixtures"""
         cls.bing_dot_com = "bing.com"
         #cls.ip = "202.106.46.151" # IP address of bing.com
         cls.ip = "204.79.197.200"

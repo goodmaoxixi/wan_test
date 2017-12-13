@@ -12,13 +12,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='WAN Test',
+    name='wantest',
     version='0.0.1',
     description='A WAN test suite',
     long_description=readme,
     author='Guanglin Du; Jia Li',
     author_email='guanglin.du@gmail.com; goodmaoxixi@gmail.com',
-    url='https://github.com/goodmaoxixi/wan_test',
+    url='https://github.com/goodmaoxixi/wantest',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
     test_suite="tests"
