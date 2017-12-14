@@ -13,7 +13,7 @@ from email.mime.text import MIMEText
 
 def send(mail_host, mail_user, mail_pass,
          mail_postfix, to_list, sub, content): 
-    """ Send an email with no proxy. """
+    """Sends an email with no proxy."""
     me = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
     msg = MIMEText(content) 
     msg['Subject'] = sub 
@@ -32,7 +32,7 @@ def send(mail_host, mail_user, mail_pass,
 
 
 def recvline(sock):
-    """ Send an email behind a proxy. Receives a line."""
+    """Sends an email behind a proxy. Receives a line."""
     stop = 0
     line = ''
     while True:
@@ -52,7 +52,7 @@ class ProxySMTP(smtplib.SMTP):
     def __init__(self, host='', port=0, p_address='',p_port=0,
                  local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT):
         """
-        Initialize a ProxySMTP instance.
+        Initializes a ProxySMTP instance.
 
         If specified, `host' is the name of the remote host to which to
         connect.  If specified, `port' specifies the port to which to connect.

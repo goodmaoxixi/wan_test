@@ -43,9 +43,13 @@ def is_page_available(host, path="/"):
         return None
 
 
-# https://gist.github.com/fedir/5883651
 def is_url_accessible(url):
-    """Tests whether a URL is accessable. This is concise and effective."""
+    """
+    Checks whether a URL is accessable.
+
+    This is concise and effective.
+    See https://gist.github.com/fedir/5883651
+    """
     ret = urllib2.urlopen(url)
     result = ""
     if ret.code == 200:

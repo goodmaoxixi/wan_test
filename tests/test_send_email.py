@@ -29,7 +29,7 @@ class SendMailTestSuite(unittest.TestCase):
     def tearDownClass(cls):
         pass
 
-    def test_send_mail(self):
+    def test_send_email(self):
         nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         news = "Hello, World!\n---Automatically sent from the WAN test suite."
         msg = (nowStr + "\n"
@@ -47,7 +47,7 @@ class SendMailTestSuite(unittest.TestCase):
         self.assertFalse(result, "Should be false as the address is invalid")
         #self.assertTrue(result, "Should be true")
 
-    def test_send_mail_behind_proxy(self):        
+    def test_send_email_behind_proxy(self):        
         result = wantest.send_email.send_behind_proxy(
             self.mail_host,
             self.mail_port,
