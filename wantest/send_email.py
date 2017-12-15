@@ -98,9 +98,9 @@ class ProxySMTP(smtplib.SMTP):
         # and just alter the socket connection bit.
         print('Will connect to:', (host, port))
         print('Connect to proxy.')
-        new_socket = socket.create_connection((self.p_address,self.p_port),
+        new_socket = socket.create_connection((self.p_address, self.p_port),
                                               timeout)
-        s = "CONNECT %s:%s HTTP/1.1\r\n\r\n" % (port,host)
+        s = "CONNECT %s:%s HTTP/1.1\r\n\r\n" % (port, host)
         s = s.encode('UTF-8')
         new_socket.sendall(s)
 

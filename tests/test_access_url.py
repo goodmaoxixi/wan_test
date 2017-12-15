@@ -11,7 +11,7 @@ class AccessURLTestSuite(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Class-scope test fixtures"""
-        cls.bing_dot_com = "bing.com"
+        cls.bing_dot_com = "http://www.bing.com"
 
     def test_url_access(self):
         result = wantest.access_url.is_url_accessible(self.bing_dot_com)
