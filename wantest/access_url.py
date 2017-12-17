@@ -53,9 +53,9 @@ def is_url_accessible(url):
     ret = urllib2.urlopen(url)
     result = ""
     if ret.code == 200:
-        result = " is accessable"
+        result = " is accessable."
     else:
-        result = " is NOT accessable"
+        result = " is NOT accessable."
     
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     result = now + " " + url + result

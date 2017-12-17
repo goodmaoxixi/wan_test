@@ -46,5 +46,5 @@ def ping2(count, cmd):
     result = (result + " "
               + str(count) + " "
               + "The IP address {0} is".format(cmd[-1]) + " "
-              + s1)
+              + s1 + "\n")
     return result

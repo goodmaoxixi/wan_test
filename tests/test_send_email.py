@@ -22,7 +22,7 @@ class SendMailTestSuite(unittest.TestCase):
         cls.mail_pass    = "password"
         cls.mail_postfix = "example.com"
         cls.mail_to_list = "example@example.com"
-        cls.proxy_host  = "192.168.1.1"
+        cls.proxy_host   = "192.168.1.1"
         cls.proxy_port   = 8080
 
     @classmethod
@@ -55,6 +55,7 @@ class SendMailTestSuite(unittest.TestCase):
             self.proxy_port,
             self.mail_user,
             self.mail_pass,
+            self.mail_postfix,
             self.mail_to_list)
         self.assertTrue("Mail sent successfully" in result,
                         "Successful sending expected")

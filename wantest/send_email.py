@@ -20,11 +20,14 @@ def send(mail_host, mail_user, mail_pass,
     msg['From'] = me 
     msg['To'] = ";".join(to_list) 
     try: 
-        s = smtplib.SMTP() 
-        s.connect(mail_host) 
-        s.login(mail_user,mail_pass) 
+        #s = smtplib.SMTP()  # http
+        s = smtplib.SMTP_SSL(mail_host) # smtp ssl/Port 465
+        s.set_debuglevel(1)
+        #s.connect(mail_host, 465)
+        #s.starttls() # unsupported
+        s.login(mail_user, mail_pass) 
         s.sendmail(me, to_list, msg.as_string()) 
-        s.close() 
+        s.quit()
         return True
     except Exception, e: 
         print str(e) 
@@ -112,15 +115,15 @@ class ProxySMTP(smtplib.SMTP):
 
 
 def send_behind_proxy(host, port, p_address, p_port, mail_user, mail_pass,
-                      receivers):
+                      mail_postfix, receivers):
+    """Email receivers must be a list object, e.g., ["312@qq.com"]"""
     # Both port 25 and 587 work for SMTP
     conn = ProxySMTP(host, port, p_address, p_port)
     conn.ehlo()
     conn.starttls()
     conn.ehlo()
 
-    sender = mail_user + "@" + mail_postfix
-    #receivers = ["312@qq.com"] # list
+    sender = mail_user + "@" + mail_postfix    
     msg = """From: From Person <from@fromdomain.com>
              To: To Person <to@todomain.com>
              Subject: SMTP e-mail test

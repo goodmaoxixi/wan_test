@@ -10,13 +10,14 @@ import datetime
 
 def resolve_domain_name(domain_name):
     nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    result = nowStr
+    s1 = ""
     try:
-        result = result + " => " + socket.gethostbyname(domain_name)
+        s1 = " => " + socket.gethostbyname(domain_name)
     except socket.error, err_msg:
-        result = result + ": " + str(err_msg)
-        
-    print(nowStr + result)
+        s1 = ": " + str(err_msg)
+    
+    result = nowStr + " " + domain_name + s1
+    print(result)
     return result
 
 
