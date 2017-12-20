@@ -21,11 +21,9 @@ def send(mail_host, mail_user, mail_pass,
     msg['To'] = ";".join(to_list) 
     try: 
         #s = smtplib.SMTP()  # http
-        s = smtplib.SMTP_SSL(mail_host) # smtp ssl/Port 465
+        s = smtplib.SMTP_SSL(mail_host, 465) # smtp ssl/Port 465
         s.set_debuglevel(1)
-        #s.connect(mail_host, 465)
-        #s.starttls() # unsupported
-        s.login(mail_user, mail_pass) 
+        s.login(mail_user + "@" + mail_postfix, mail_pass) 
         s.sendmail(me, to_list, msg.as_string()) 
         s.quit()
         return True
