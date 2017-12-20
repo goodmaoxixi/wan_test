@@ -10,20 +10,23 @@ import smtplib
 import datetime
 from email.mime.text import MIMEText
 
+# TODO: Send an email using ssl.
 
-def send(mail_host, mail_user, mail_pass,
+def send(smtp_host, mail_user, mail_pass,
          mail_postfix, to_list, sub, content): 
     """Sends an email with no proxy."""
-    me = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
+    me  = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
     msg = MIMEText(content) 
     msg['Subject'] = sub 
-    msg['From'] = me 
-    msg['To'] = ";".join(to_list) 
+    msg['From']    = me 
+    msg['To']      = ";".join(to_list) 
     try: 
-        #s = smtplib.SMTP()  # http
-        s = smtplib.SMTP_SSL(mail_host, 465) # smtp ssl/Port 465
-        s.set_debuglevel(1)
-        s.login(mail_user + "@" + mail_postfix, mail_pass) 
+        s = smtplib.SMTP()               # http, 25
+        #s = smtplib.SMTP_SSL(smtp_host) # ssl, 465
+        #s.set_debuglevel(1)
+        s.connect(smtp_host)       # http, 25
+        #s.connect(smtp_host, 465) # ssl, 465
+        s.login(mail_user, mail_pass) 
         s.sendmail(me, to_list, msg.as_string()) 
         s.quit()
         return True

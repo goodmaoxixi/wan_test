@@ -30,10 +30,11 @@ class WANTestConfigParser(object):
         self.passwords    = self.config.get('signin', 'passwords')
         
         # Email sending and receiving info
-        self.mail_host    = self.config.get('email', 'mail_host')
+        self.smtp_host    = self.config.get('email', 'smtp_host')
+        self.mail_port    = self.config.get('email', 'mail_port')
+        self.use_ssl    = self.config.get('email', 'use_ssl')
         self.mail_user    = self.config.get('email', 'mail_user')
         self.mail_pass    = self.config.get('email', 'mail_pass')
-        self.mail_port    = self.config.getint('email', 'mail_port')        
         self.mail_postfix = self.config.get('email', 'mail_postfix')
         self.mail_to_list = self.config.get('email', 'mail_to_list')
         self.behind_proxy = self.config.getint('email', 'behind_proxy')
@@ -42,14 +43,15 @@ class WANTestConfigParser(object):
                         
     def show_info(self):
         """Display the configuration info to debug."""
+        print("--- ping ---")
         print("ip_addresses: {0}".format(self.ip_addresses))
+        print("\n--- nslookup ---")
         print("domain_names: {0}".format(self.domain_names))
         print("portals: {0}".format(self.portals))
-        print("web_urls: {0}".format(self.web_urls))
-        print("usernames: {0}".format(self.usernames))
-        print("passwords: {0}".format(self.passwords))
-        print("mail_host: {0}".format(self.mail_host))
-        print("mail_port: {0}".format(self.mail_port))       
+        print("\n--- email ---")
+        print("smtp_host: {0}".format(self.smtp_host))
+        print("use_ssl: {0}".format(self.use_ssl))
+        print("mail_port: {0}".format(self.mail_port))
         print("mail_user: {0}".format(self.mail_user))
         print("mail_pass: {0}".format(self.mail_pass))
         print("mail_postfix: {0}".format(self.mail_postfix))
@@ -57,6 +59,10 @@ class WANTestConfigParser(object):
         print("behind_proxy: {0}".format(self.behind_proxy))
         print("proxy_host: {0}".format(self.proxy_host))
         print("proxy_port: {0}".format(self.proxy_port))
+        print("\n--- signin ---")
+        print("web_urls: {0}".format(self.web_urls))
+        print("usernames: {0}".format(self.usernames))
+        print("passwords: {0}".format(self.passwords))
         
 
 if __name__ == '__main__':
