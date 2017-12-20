@@ -100,7 +100,7 @@ def test_email(output_file):
 
     if wtcp.behind_proxy == 0: # no proxy
         if send_email.send(
-                 wtcp.mail_host,
+                 wtcp.smtp_host,
                  wtcp.mail_user,
                  wtcp.mail_pass,
                  wtcp.mail_postfix,
@@ -116,7 +116,7 @@ def test_email(output_file):
             output_file.write(msg)
     else: # behind a proxy
         if send_email.send_behind_proxy(
-                wtcp.mail_host,
+                wtcp.smtp_host,
                 wtcp.mail_port,
                 wtcp.proxy_host,
                 wtcp.proxy_port,
