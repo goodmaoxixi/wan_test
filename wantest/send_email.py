@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-
 # Email-sending module based on my colleague Xuleo's work.
 # Authors:
 #   xuleo@gmail.com
@@ -11,24 +10,25 @@ import smtplib
 import datetime
 from email.mime.text import MIMEText
 
-proxy_host = "192.168.1.10"
-proxy_port = "8080"
+# TODO: Send an email using ssl.
 
-
-def send(mail_host, mail_user, mail_pass,
-                         mail_postfix, to_list, sub, content): 
-    """ Send an email with no proxy. """
-    me = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
+def send(smtp_host, mail_user, mail_pass,
+         mail_postfix, to_list, sub, content): 
+    """Sends an email with no proxy."""
+    me  = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
     msg = MIMEText(content) 
     msg['Subject'] = sub 
-    msg['From'] = me 
-    msg['To'] = ";".join(to_list) 
+    msg['From']    = me 
+    msg['To']      = ";".join(to_list) 
     try: 
-        s = smtplib.SMTP() 
-        s.connect(mail_host) 
-        s.login(mail_user,mail_pass) 
+        s = smtplib.SMTP()               # http, 25
+        #s = smtplib.SMTP_SSL(smtp_host) # ssl, 465
+        #s.set_debuglevel(1)
+        s.connect(smtp_host)       # http, 25
+        #s.connect(smtp_host, 465) # ssl, 465
+        s.login(mail_user, mail_pass) 
         s.sendmail(me, to_list, msg.as_string()) 
-        s.close() 
+        s.quit()
         return True
     except Exception, e: 
         print str(e) 
@@ -36,7 +36,7 @@ def send(mail_host, mail_user, mail_pass,
 
 
 def recvline(sock):
-    """ Send an email behind a proxy. Receives a line."""
+    """Sends an email behind a proxy. Receives a line."""
     stop = 0
     line = ''
     while True:
@@ -51,10 +51,13 @@ def recvline(sock):
 
 
 class ProxySMTP(smtplib.SMTP):
-    """Connects to a SMTP server through a HTTP proxy."""
-    def __init__(self, host='', port=0, p_address='',p_port=0, local_hostname=None,
-             timeout=socket._GLOBAL_DEFAULT_TIMEOUT):
-        """Initialize a new instance.
+    """Connects to a SMTP server through an HTTP proxy."""
+
+    def __init__(self, host='', port=0, p_address='',p_port=0,
+                 local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT):
+        """
+        Initializes a ProxySMTP instance.
+
         If specified, `host' is the name of the remote host to which to
         connect.  If specified, `port' specifies the port to which to connect.
         By default, smtplib.SMTP_PORT is used.  An SMTPConnectError is raised
@@ -64,7 +67,6 @@ class ProxySMTP(smtplib.SMTP):
         """
         self.p_address = p_address
         self.p_port = p_port
-
         self.timeout = timeout
         self.esmtp_features = {}
         self.default_port = smtplib.SMTP_PORT
@@ -87,7 +89,6 @@ class ProxySMTP(smtplib.SMTP):
             else:
                 # We can't find an fqdn hostname, so use a domain literal
                 addr = '127.0.0.1'
-
                 try:
                     addr = socket.gethostbyname(socket.gethostname())
                 except socket.gaierror:
@@ -101,9 +102,9 @@ class ProxySMTP(smtplib.SMTP):
         # and just alter the socket connection bit.
         print('Will connect to:', (host, port))
         print('Connect to proxy.')
-        new_socket = socket.create_connection((self.p_address,self.p_port), timeout)
-
-        s = "CONNECT %s:%s HTTP/1.1\r\n\r\n" % (port,host)
+        new_socket = socket.create_connection((self.p_address, self.p_port),
+                                              timeout)
+        s = "CONNECT %s:%s HTTP/1.1\r\n\r\n" % (port, host)
         s = s.encode('UTF-8')
         new_socket.sendall(s)
 
@@ -114,25 +115,38 @@ class ProxySMTP(smtplib.SMTP):
         return new_socket
 
 
-def send_behind_proxy():
-    """ Both port 25 and 587 work for SMTP """
-    conn = ProxySMTP(host="smtp.qq.com", port=587,
-        p_address=proxy_host, p_port=proxy_port)
+def send_behind_proxy(host, port, p_address, p_port, mail_user, mail_pass,
+                      mail_postfix, receivers):
+    """Email receivers must be a list object, e.g., ["312@qq.com"]"""
+    # Both port 25 and 587 work for SMTP
+    conn = ProxySMTP(host, port, p_address, p_port)
     conn.ehlo()
     conn.starttls()
     conn.ehlo()
 
-    r, d = conn.login("987@qq.com", "")
-    print('Login reply: %s' % r)
-
-    sender = "987@qq.com"
-    receivers = ["312@qq.com"]
-    message = """From: From Person <from@fromdomain.com>
- 	                        To: To Person <to@todomain.com>
-	                        Subject: SMTP e-mail test
-	                        This is a test mail sender.
-	                    """
+    sender = mail_user + "@" + mail_postfix    
+    msg = """From: From Person <from@fromdomain.com>
+             To: To Person <to@todomain.com>
+             Subject: SMTP e-mail test
+             This is a test mail sender."""
+    r, d = conn.login(sender, port)
+    print('Login reply: {0}'.format(r))
+    
     print('--- Sending an email...')
-    conn.sendmail(sender, receivers, message)    
+    result = "Mail sent successfully"
+    try:
+        conn.sendmail(sender, receivers, msg)
+    except SMTPRecipientsRefused, e:
+        result = "All recipients were refused"
+    except SMTPHeloError, e:
+        result = "The server didn’t reply properly to the HELO greeting"
+    except SMTPSenderRefused, e:
+        result = "The server didn’t accept the from_addr"
+    except SMTPDataError, e:
+        result = ("The server replied with an unexpected error code "
+                 + "(other than a refusal of a recipient).")
+    else:
+        pass
     conn.close()
     print('--- Done!')
+    return result

@@ -7,19 +7,20 @@
 import socket
 import datetime
 
+
 def resolve_domain_name(domain_name):
-    #print("--- Retrieving a remote machine's IP address ---")
-    result = domain_name
     nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    s1 = ""
     try:
-        result = result + " => " + socket.gethostbyname(domain_name)
+        s1 = " => " + socket.gethostbyname(domain_name)
     except socket.error, err_msg:
-        result = result + ": " + str(err_msg)
-        
-    print(nowStr + result)
+        s1 = ": " + str(err_msg)
+    
+    result = nowStr + " " + domain_name + s1
+    print(result)
     return result
-    
-    
+
+
 if __name__ == '__main__':
     resolve_domain_name("www.baidu.com")
     resolve_domain_name("www.baidunonexitent.com")
