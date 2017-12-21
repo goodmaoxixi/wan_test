@@ -26,8 +26,7 @@ All the outputs are time-stamped textual files in folder tmp. The time format is
 
 Run
 -----------------------------
-#. cd wantest/wantest
-#. python wantest_main.py
+From your DOS prompt and terminal, python wantest/wantest_main.py, or use any relative or absolute path to start it. Create a shortcut if you like to.
 
 Run Tests
 -------------------------
