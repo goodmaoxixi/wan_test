@@ -147,6 +147,16 @@ def println(s, file=sys.stderr):
 	file.write(s.encode(sys.getfilesystemencoding(), 'replace') + os.linesep)
 
 
+def check_folder_tmp():
+    path ='../tmp'
+    new_path = ''.join(x.decode('utf-8') for x in path.split())
+    if os.path.exists(new_path):
+        print("Folder tmp does exist")
+    else:
+        os.mkdir (r'tmp')
+        print("Folder tmp does not exist, makedir ../tmp")
+
+
 if __name__ == "__main__":
     #now = datetime.datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     #print("A string format time %s" % now)	
@@ -154,6 +164,8 @@ if __name__ == "__main__":
     now2 = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
     filename = "../tmp/result-" + str(now2) + ".txt"
     output_file = open(filename, "w+")
+
+    check_folder_tmp()
 
     print("\n=== WAN test started at " + now + " ===")
     println(u'''~~~ 广域网应急演练自动测试脚本 ~~~'''.strip())        
