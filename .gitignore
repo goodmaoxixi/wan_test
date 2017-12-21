@@ -99,3 +99,5 @@ ENV/
 
 # Ignores temp files
 /tmp
+.DS_Store
+
