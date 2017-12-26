@@ -16,9 +16,8 @@ class SendMailTestSuite(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Class-scope test fixtures"""
-        cls.smtp_host    = "smtp.example.com"
-        cls.use_ssl      = 0
-        cls.mail_port    = 25 # 465
+        cls.mail_host    = "smtp.example.com"
+        cls.mail_port    = 25 # 587
         cls.mail_user    = "foo"
         cls.mail_pass    = "password"
         cls.mail_postfix = "example.com"
@@ -34,11 +33,11 @@ class SendMailTestSuite(unittest.TestCase):
         nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         news = "Hello, World!\n---Automatically sent from the WAN test suite."
         msg = (nowStr + "\n"
-               + self.mail_user + "@" + self.smtp_host
+               + self.mail_user + "@" + self.mail_host
                + " sent "
                + self.mail_to_list)
         result = wantest.send_email.send(
-            self.smtp_host,
+            self.mail_host,
             self.mail_user,
             self.mail_pass,
             self.mail_postfix,
@@ -50,7 +49,7 @@ class SendMailTestSuite(unittest.TestCase):
 
     def test_send_email_behind_proxy(self):        
         result = wantest.send_email.send_behind_proxy(
-            self.smtp_host,
+            self.mail_host,
             self.mail_port,
             self.proxy_host,
             self.proxy_port,
