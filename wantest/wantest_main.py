@@ -11,6 +11,7 @@
 import os
 import sys
 import shlex
+import shutil
 import datetime
 import platform
 import subprocess
@@ -28,8 +29,6 @@ if os.path.islink(__file__):
 work_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(work_path)
 
-# A global variable to hold the test configuration.
-wtcp = config_loader.WANTestConfigParser()
 # The ping command is OS-dependent
 osid = platform.system().lower()
 
@@ -157,6 +156,15 @@ def check_folder_tmp():
         print("Folder tmp does not exist, makedir ../tmp")
 
 
+def check_file():
+    dirname1 = "../tmp"
+    dirname2 = "./"
+    src = os.path.join(dirname2, "wantest.ini") # source   
+    filename = os.path.join(dirname1, "wantest.ini") # destination
+    if not os.path.isfile(filename):
+        print("wantest.ini does not exists! copy the file!")
+        shutil.copy2(src, filename)
+
 if __name__ == "__main__":
     #now = datetime.datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     #print("A string format time %s" % now)	
@@ -166,6 +174,11 @@ if __name__ == "__main__":
     output_file = open(filename, "w+")
 
     check_folder_tmp()
+
+    check_file()
+
+    # A global variable to hold the test configuration.
+    wtcp = config_loader.WANTestConfigParser()
 
     print("\n=== WAN test started at " + now + " ===")
     println(u'''~~~ 广域网应急演练自动测试脚本 ~~~'''.strip())        

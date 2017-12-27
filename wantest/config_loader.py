@@ -19,7 +19,6 @@ class WANTestConfigParser(object):
     def __init__(self):
         """Read all the configuration info from file test_config.ini."""
         self.config = ConfigParser.RawConfigParser()
-        #self.config.read('wantest.ini')
         self.config.read('../tmp/wantest.ini') # used in development only      
 
         self.ip_addresses = self.config.get('ping', 'ip_addresses')    
