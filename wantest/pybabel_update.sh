@@ -34,7 +34,7 @@ pybabel extract -F babel.config -o lang/messages.pot .
 
 # 2.2 Update (Once initialized, the frequent work is to update them in order to keep the existing translation.)
 #pybabel update -l de_DE -d ./lang -i ./lang/messages.pot
-#pybabel update -l en_US -d ./lang -i ./lang/messages.pot
+pybabel update -l en_US -d ./lang -i ./lang/messages.pot
 #pybabel update -l es_VE -d ./lang -i ./lang/messages.pot
 #pybabel update -l fa_IR -d ./lang -i ./lang/messages.pot
 #pybabel update -l fr_FR -d ./lang -i ./lang/messages.pot
@@ -56,4 +56,4 @@ pybabel update -l zh_CN -d ./lang -i ./lang/messages.pot
 # 3.1 Use command msgfmt to compile one by one
 #msgfmt lang/zh_CN/LC_MESSAGES/messages.po -o lang/zh_CN/LC_MESSAGES/messages.mo 
 # 3.2 Use pybabel to compile all with a single command (recommended)
-#pybabel compile -f -d ./lang
+pybabel compile -f -d ./lang
