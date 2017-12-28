@@ -36,7 +36,7 @@ osid = platform.system().lower()
 
 def ping_addresses(output_file):
     # Outputs the reachable addresses
-    output_file.write("\n*** ping tests started ***\n")
+    output_file.write("\n" + _("*** ping tests started ***") + "\n")
     # Creates the cmd for Windows/Linux/Mac OS    
     cmd = "ping "
     if osid == "windows":
@@ -47,19 +47,19 @@ def ping_addresses(output_file):
         result = "Unknown OS: " + osid + " I don't know how to ping."
         output_file.write(result)        
         print(result)
-        output_file.write("*** ping tests ended with errors ***\n")
-        print("*** ping tests ended with errors ***\n")
+        output_file.write(_("*** ping tests ended with errors ***") + "\n")
+        print(_("*** ping tests ended with errors ***") + "\n")
         return result
     
     addresses = wtcp.ip_addresses.split("|")
-    print("\n*** ping tests started ***")
+    print("\n" + _("*** ping tests started ***"))
     for count, ip in enumerate(addresses):
         cmd = cmd + " " + ip
         result = ping.ping2(count, cmd)
         output_file.write(result)
 
-    output_file.write("*** ping tests ended ***\n")
-    print("*** ping tests ended ***\n")
+    output_file.write(_("*** ping tests ended ***") + "\n")
+    print(_("*** ping tests ended ***") + "\n")
 
 
 def test_DNS(output_file):
@@ -133,18 +133,14 @@ def test_email(output_file):
             output_file.write(msg)
 
     output_file.write("*** Email tests ended ***\n")
-    print("*** Email tests ended ***\n")
+    print(_("*** Email tests ended ***") + "\n")
 
 
 # TODO: To be implemented.
 def test_signin(output_file):
-    output_file.write("\n!!!Signin tests not supported yet."
-                      +" Please do that manually.\n")
-
-
-def println(s, file=sys.stderr):
-	assert type(s) is type(u'')
-	file.write(s.encode(sys.getfilesystemencoding(), 'replace') + os.linesep)
+    output_file.write("\n"
+        + _("Signin tests not supported yet. Please do that manually.")
+        + "\n")
 
 
 if __name__ == "__main__":
@@ -155,8 +151,8 @@ if __name__ == "__main__":
     filename = "../tmp/result-" + str(now2) + ".txt"
     output_file = open(filename, "w+")
 
-    print("\n=== WAN test started at " + now + " ===")
-    println(u'''~~~ 广域网应急演练自动测试脚本 ~~~'''.strip())        
+    print("\n" + _("=== WAN test started at ") + now + " ===")
+    print(_("~~~ A WAN test suite~~~"))
     ping_addresses(output_file)
     test_DNS(output_file)
     test_portals(output_file)
@@ -165,8 +161,8 @@ if __name__ == "__main__":
     output_file.close()
 
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print("\n!!!Signin tests not supported yet. Please do that manually.")
-    println(u'''网站登录测试尚不支持，请手动执行！'''.strip())    
-    print("=== WAN test ended at " + now + " ===\n")
-    println(u'''~~~ 测试脚本运行结束，请到tmp目录下查看结果。 ~~~'''.strip())   
-    
+    print("\n"
+        + _("Signin tests not supported yet. Please do that manually."))
+    print(_("Please test your webpage login manually."))    
+    print("=== " + _("WAN test ended at ") + now + " ===\n")
+    print(_("~~~ All tests done. Check the result in folder tmp. ~~~"))

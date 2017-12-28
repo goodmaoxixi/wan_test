@@ -99,5 +99,8 @@ ENV/
 
 # Ignores temp files
 /tmp
-.DS_Store
+.
 
+# I18N files
+*.pot
+*.mo
