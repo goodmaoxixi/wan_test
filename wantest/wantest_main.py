@@ -12,13 +12,15 @@ import os
 import sys
 import shlex
 import shutil
+import locale
+import gettext
 import datetime
 import platform
 import subprocess
 
 import ping
-import access_url
 import nslookup
+import access_url
 import send_email
 import config_loader
 
@@ -161,6 +163,41 @@ def check_file():
         print("wantest.ini does not exists! copy the file!")
         shutil.copy2(src, filename)
 
+
+# http://www.wefearchange.org/2012/06/the-right-way-to-internationalize-your.html
+# Perhaps more usefully, you can use the gettext.install() function to put
+# _() into the built-in namespace,
+# so that all your other code can just use that function without doing
+# anything special.
+# Again, though we have to work around the boneheaded Python 2 API.  
+# Here's how to write code which works correctly in both Python 2 and 3.
+def install(domain_name):
+    kwargs = {}
+    if sys.version_info[0] < 3:
+    # In Python 2, ensure that the _() that gets installed into
+    # built-ins always returns unicodes. This matches the default
+        # behavior under Python 3, although that keyword argument is not
+        # present in the Python 3 API.
+        kwargs['unicode'] = True
+    gettext.install(domain_name, **kwargs)
+
+
+def set_language(domain_name, locale_dir, language):
+    t = gettext.translation(domain_name, locale_dir, [language])
+    global _ # or only the default locale used
+    _ = t.ugettext
+
+
+def get_default_locale():
+    # https://wiki.maemo.org/Internationalize_a_Python_application
+    # Get the default locale, e.g., ['en_US', 'UTF-8']
+    # lang_encoding = os.environ.get('LANG', '').split('.')
+    # Linux/Unix only
+    # tuple, e.g., ('en_US', 'UTF-8')
+    default_locale, encoding = locale.getdefaultlocale()
+    return default_locale
+
+
 if __name__ == "__main__":
     #now = datetime.datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     #print("A string format time %s" % now)	
@@ -174,6 +211,14 @@ if __name__ == "__main__":
 
     # A global variable to hold the test configuration.
     wtcp = config_loader.WANTestConfigParser()
+
+    locale_dir = os.path.join(work_path, 'lang')
+    print(locale_dir)
+#    default_lang = get_default_locale()
+    default_lang = "en_US"
+    print(default_lang)
+    install("messages")
+    set_language("messages", locale_dir, default_lang)
 
     print("\n" + _("=== WAN test started at ") + now + " ===")
     print(_("~~~ A WAN test suite~~~"))
