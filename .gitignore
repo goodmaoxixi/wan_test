@@ -99,3 +99,8 @@ ENV/
 
 # Ignores temp files
 /tmp
+.
+
+# I18N files
+*.pot
+*.mo

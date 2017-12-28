@@ -7,17 +7,18 @@ Features Implemented
 -----------------------------
 1. ping
 2. nslookup
-3. portal retrieval
-4. mail sending with or without a proxy
+3. Portal retrieval
+4. Mail sending via SMTP 25 without proxy and SSL support
 
 Features to Be Implemented
 -----------------------------
-1. Formatted output, e.g., CSV format, Excel format
-2. schedule tasks, and more
+1. Sending an email behind proxy using SSL
+2. Formatted output, e.g., CSV format, Excel format
+3. schedule tasks, and more
 
 Configuration File
 -----------------------------
-wan_test.ini, which holds all the input info. 
+Create a folder named wantest/tmp under the root foler of this suite. Use wantest/wantest.ini as a template and copy it to folder wantest/tmp and customize it as you wish. If you do not do this in advance, the suite will do it for you automatically. So please keep in mind that wantest/tmp/wantest.ini is the the actual configuration file that the suite reads.
 
 Ouput
 -----------------------------
@@ -25,8 +26,7 @@ All the outputs are time-stamped textual files in folder tmp. The time format is
 
 Run
 -----------------------------
-#. cd wan_test/wan_test
-#. python wan_test_main.py
+From your DOS prompt and terminal, python wantest/wantest_main.py, or use any relative or absolute path to start it. Create a shortcut if you like to.
 
 Run Tests
 -------------------------
