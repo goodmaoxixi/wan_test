@@ -37,7 +37,7 @@ osid = platform.system().lower()
 
 def ping_addresses(output_file):
     # Outputs the reachable addresses
-    output_file.write("\n" + _("*** ping tests started ***") + "\n")
+    output_file.write("\n" + "*** ping tests started ***" + "\n")
     # Creates the cmd for Windows/Linux/Mac OS    
     cmd = "ping "
     if osid == "windows":
@@ -48,7 +48,7 @@ def ping_addresses(output_file):
         result = "Unknown OS: " + osid + " I don't know how to ping."
         output_file.write(result)        
         print(result)
-        output_file.write(_("*** ping tests ended with errors ***") + "\n")
+        output_file.write("*** ping tests ended with errors ***" + "\n")
         print(_("*** ping tests ended with errors ***") + "\n")
         return result
     
@@ -59,7 +59,7 @@ def ping_addresses(output_file):
         result = ping.ping2(count, cmd)
         output_file.write(result)
 
-    output_file.write(_("*** ping tests ended ***") + "\n")
+    output_file.write("*** ping tests ended ***" + "\n")
     print(_("*** ping tests ended ***") + "\n")
 
 
@@ -140,7 +140,7 @@ def test_email(output_file):
 # TODO: To be implemented.
 def test_signin(output_file):
     output_file.write("\n"
-        + _("Signin tests not supported yet. Please do that manually.")
+        + "Signin tests not supported yet. Please do that manually."
         + "\n")
 
 
@@ -213,15 +213,12 @@ if __name__ == "__main__":
     wtcp = config_loader.WANTestConfigParser()
 
     locale_dir = os.path.join(work_path, 'lang')
-    print(locale_dir)
-#    default_lang = get_default_locale()
-    default_lang = "en_US"
-    print(default_lang)
+    default_lang = get_default_locale()
+    default_lang = 'zh_CN'
     install("messages")
     set_language("messages", locale_dir, default_lang)
 
     print("\n" + _("=== WAN test started at ") + now + " ===")
-    print(_("~~~ A WAN test suite~~~"))
     ping_addresses(output_file)
     test_DNS(output_file)
     test_portals(output_file)
@@ -231,7 +228,7 @@ if __name__ == "__main__":
 
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print("\n"
-        + _("Signin tests not supported yet. Please do that manually."))
-    print(_("Please test your webpage login manually."))    
-    print("=== " + _("WAN test ended at ") + now + " ===\n")
-    print(_("~~~ All tests done. Check the result in folder tmp. ~~~"))
+        + _("Signin tests not supported yet. Please do that manually.")
+        + "\n")
+    print(_("All tests done. Check the result in folder tmp."))
+    print("\n=== " + _("WAN test ended at ") + now + " ===\n")
