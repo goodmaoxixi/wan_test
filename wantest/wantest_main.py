@@ -65,25 +65,25 @@ def ping_addresses(output_file):
 
 def test_DNS(output_file):
     domain_names = wtcp.domain_names.split("|")
-    print("*** nslookup tests started ***")
+    print(_("*** nslookup tests started ***"))
     output_file.write("\n\n*** nslookup tests started ***\n")
     nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     for name in domain_names:
         result = nslookup.resolve_domain_name(name)
         output_file.write(nowStr + " " + result + "\n")
     output_file.write("*** nslookup tests ended ***\n")
-    print("*** nslookup tests ended ***\n")
+    print(_("*** nslookup tests ended ***") + "\n")
 
 
 def test_portals(output_file):
     portals = wtcp.portals.split("|")
-    print("*** portal tests started ***")
+    print(_("*** portal tests started ***"))
     output_file.write("\n\n*** portal tests started ***\n")
     for portal in portals:
         result = access_url.is_url_accessible(portal)
         output_file.write(result + "\n")
     output_file.write("*** portal tests ended ***\n")
-    print("*** portal tests ended ***\n")
+    print(_("*** portal tests ended ***") + "\n")
 
 
 def test_email(output_file):
@@ -92,7 +92,7 @@ def test_email(output_file):
     nowStr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     news = "Hello, World!\n--- Automatically sent from the WAN test suite."
     
-    print("*** Email tests started ***\n")
+    print(_("*** Email tests started ***") + "\n")
     output_file.write("\n\n*** email tests started ***\n")
     msg = (nowStr + " "
           + wtcp.mail_user + "@" + wtcp.mail_postfix
@@ -148,10 +148,10 @@ def check_folder_tmp():
     path ='../tmp'
     new_path = ''.join(x.decode('utf-8') for x in path.split())
     if os.path.exists(new_path):
-        print("Folder tmp does exist")
+        print(_("Folder tmp does exist"))
     else:
         os.mkdir (r'tmp')
-        print("Folder tmp does not exist, makedir ../tmp")
+        print(_("Folder tmp does not exist, makedir ../tmp"))
 
 
 def check_file():
@@ -160,7 +160,7 @@ def check_file():
     src = os.path.join(dirname2, "wantest.ini") # source   
     filename = os.path.join(dirname1, "wantest.ini") # destination
     if not os.path.isfile(filename):
-        print("wantest.ini does not exists! copy the file!")
+        print(_("wantest.ini does not exists! copy the file!") + "/n")
         shutil.copy2(src, filename)
 
 
@@ -206,9 +206,6 @@ if __name__ == "__main__":
     filename = "../tmp/result-" + str(now2) + ".txt"
     output_file = open(filename, "w+")
 
-    check_folder_tmp()
-    check_file()
-
     # A global variable to hold the test configuration.
     wtcp = config_loader.WANTestConfigParser()
 
@@ -217,6 +214,9 @@ if __name__ == "__main__":
     default_lang = 'zh_CN'
     install("messages")
     set_language("messages", locale_dir, default_lang)
+
+    check_folder_tmp()
+    check_file()
 
     print("\n" + _("=== WAN test started at ") + now + " ===")
     ping_addresses(output_file)

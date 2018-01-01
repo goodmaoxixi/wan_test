@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-28 17:09+0800\n"
+"POT-Creation-Date: 2017-12-31 17:31+0800\n"
 "PO-Revision-Date: 2017-12-28 08:17+0800\n"
 "Last-Translator: Guanglin Du <dugl@petrochina.com.cn>\n"
 "Language-Team: English\n"
@@ -29,9 +29,41 @@ msgstr "*** ping tests started ***"
 msgid "*** ping tests ended ***"
 msgstr "*** ping tests ended ***"
 
+#: wantest_main.py:68
+msgid "*** nslookup tests started ***"
+msgstr "*** nslookup tests started ***"
+
+#: wantest_main.py:75
+msgid "*** nslookup tests ended ***"
+msgstr "*** nslookup tests ended ***"
+
+#: wantest_main.py:80
+msgid "*** portal tests started ***"
+msgstr "*** portal tests started ***"
+
+#: wantest_main.py:86
+msgid "*** portal tests ended ***"
+msgstr "*** portal tests ended ***"
+
+#: wantest_main.py:95
+msgid "*** Email tests started ***"
+msgstr "*** Email tests started ***"
+
 #: wantest_main.py:137
 msgid "*** Email tests ended ***"
 msgstr "*** Email tests ended ***"
+
+#: wantest_main.py:151
+msgid "Folder tmp does exist"
+msgstr "Folder tmp does exist"
+
+#: wantest_main.py:154
+msgid "Folder tmp does not exist, makedir ../tmp"
+msgstr "Folder tmp does not exist, makedir ../tmp"
+
+#: wantest_main.py:163
+msgid "wantest.ini does not exists! copy the file!"
+msgstr "wantest.ini does not exists! copy the file!"
 
 #: wantest_main.py:221
 msgid "=== WAN test started at "
